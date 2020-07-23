@@ -14,5 +14,71 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    $user = [
+       "name" => "Neven",
+       "lastname" => "Gjoreski",
+       "age" => "32"
+    ];
+    //dd($user);
+    return view('test', ['user' => $user]);
+});
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
+
+Route::get('/timemk', function () {
+    $posts = [
+     
+       ["title" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, odit.",
+        "content" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem ducimus quia beatae alias sint, atque id perspiciatis repudiandae iste. Quaerat.",
+        "updated" => "32",
+        "slug" => "first-post"],
+
+        
+       ["title" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, odit.",
+        "content" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem ducimus quia beatae alias sint, atque id perspiciatis repudiandae iste. Quaerat.",
+        "updated" => "32",
+        "slug" => "secund-post"],
+
+        
+       ["title" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, odit.",
+        "content" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem ducimus quia beatae alias sint, atque id perspiciatis repudiandae iste. Quaerat.",
+        "updated" => "10",
+        "slug" => "third-post"]
+    ];
+    //dd($user);
+    return view('time_mk_posts', ['posts' => $posts]);
+});
+
+Route::get('/timemk/{slug}', function ($slug) {
+    $posts = [
+     
+       ["title" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, odit.",
+        "content" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem ducimus quia beatae alias sint, atque id perspiciatis repudiandae iste. Quaerat.",
+        "updated" => "32",
+        "slug" => "first-post"],
+
+        
+       ["title" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, odit.",
+        "content" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem ducimus quia beatae alias sint, atque id perspiciatis repudiandae iste. Quaerat.",
+        "updated" => "32",
+        "slug" => "second-post"],
+
+        
+       ["title" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, odit.",
+        "content" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem ducimus quia beatae alias sint, atque id perspiciatis repudiandae iste. Quaerat.",
+        "updated" => "10",
+        "slug" => "third-post"]
+    ];
+   
+    $posts_collection = collect($posts);
+    $filtered_collection = $posts_collection->filter(function($element) use ($slug){
+       
+        return $element['slug'] === $slug ;
+    });
+    
+   // return view('time_mk_posts', ['posts' => [$posts[$slug]]]);
+   return view('time_mk_posts', ['posts' => $filtered_collection]);
+});
+
