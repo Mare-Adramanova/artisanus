@@ -38,5 +38,13 @@ Route::get('/zadaca', 'PostController@get_posts');
 
 Route::get('/zadaca/{slug}', 'PostController@get_secont_post');
 
+Route::get('/post',  'PostController@index');
+
+
+
+Route::get('/post/{slug}',  'PostController@show');
+
+Route::get('/lasttwopost',  'PostController@show_last_two');
+Route::get('/descpost',  'PostController@show_by_slug');
 
 

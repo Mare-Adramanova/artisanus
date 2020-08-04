@@ -16,9 +16,4 @@
 
 @endsection
 
-@section('footer')
-<footer>
-        <p> {{ $footer }} </p>
-</footer>
-    
-@endsection
+

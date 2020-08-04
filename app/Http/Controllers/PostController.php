@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Post;
 
 class PostController extends Controller
 {
@@ -28,12 +29,10 @@ class PostController extends Controller
             "slug" => "third-post"]
         ];
 
-        $footer_copiright = "Copiright@2020";
-
-        
+       
         
         //dd($user);
-        return view('time_mk_posts', ['posts' => $posts, 'footer' => $footer_copiright]);
+        return view('time_mk_posts', ['posts' => $posts]);
     }
 
     function get_by_slug ($slug) {
@@ -109,5 +108,40 @@ function get_secont_post($slug) {
        
     return view('zadaca', ['posts' => $new_arr]);
 }
+function index(){
+    $posts =  Post::all();
+
+    $posts_collection = collect($posts);
+    $updated_posts = $posts_collection->map(function($element,$now){
+        $now = now();
+       $element['last_edited'] = date_diff($now, $element['updated_at']); 
+       //dump($element);  za proverka
+        return $element;
+        //return (($now - strtotime($element['updated_at'])));
+    });
+       $updated_posts->all();
+     
+        //dd($updated_posts);
+      
+    return view('post.index', ['posts' => $updated_posts]);
+
+}
+
+
+function show($slug){
+    return Post::where('slug', $slug)->firstOrFail();
+
+    //return Post::findOrFail($slug);
+    
+}
+function show_last_two(){
+    return Post::orderBy('id', 'desc')->take(2)->get();
+}
+
+function show_by_slug(){
+    return Post::orderBy('slug', 'desc')->get();
+    
+}
+
 
 }
